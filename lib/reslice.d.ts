@@ -108,11 +108,16 @@ interface SelectorWithFactory<Input = any, Props = any, Output = any>
 }
 
 export declare function createSelector<
-  Args extends readonly [...any[]],
+  Input,
+  Props,
+  Args extends readonly Selector<Input, Props, any>[],
   Output
 >(
-  ...args: [...Args, (...inputs: any[]) => Output]
-): SelectorWithFactory<any, any, Output>;
+  ...args: [
+    ...Args,
+    (...inputs: { [K in keyof Args]: ReturnType<Args[K]> }) => Output
+  ]
+): SelectorWithFactory<Input, Props, Output>;
 
 // Props from mapStateToProps
 type MapStateToProps<SliceType, OwnProps, StateProps> = (
