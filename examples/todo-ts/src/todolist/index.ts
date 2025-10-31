@@ -1,8 +1,8 @@
 import { connect } from "reslice";
 import TodoList from "./todolist";
-import { TodoSlice } from "./type";
+import { TodosSlice } from "./type";
 
-function mapStateToProps(slice: TodoSlice, props) {
+function mapStateToProps(slice: TodosSlice, props) {
   return {
     todos: slice.getFiltered(props),
   };

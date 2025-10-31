@@ -25,41 +25,28 @@ type Selector<Input = any, Props = any, Output = any> = (
   props?: Props
 ) => Output;
 
-// Internal shapes (for inference only)
-interface BoundReducerInternal<S = {}, A extends Actions = {}> {
-  $$bind: true;
-  $$reducer: (state: S, action: any) => S;
-  $$state: S;
-  $$selectors: Record<string, any>;
-  $$actions: A;
-}
-
-interface MappedReducerInternal<
-  S,
-  Child extends Record<string, any> = {},
-  Sels extends Selectors = {},
-  Acts extends Actions = {}
-> {
-  $$mapped: true;
-  $$reducer: (state: S, action: any) => S;
-  $$state: S;
-  $$child: Child;
-  $$selectors: Sels;
-  $$actions: Acts;
-}
-
 // Public facades (hide $$)
-type BoundReducerPublic<S, A> = S & A;
-type MappedReducerPublic<S, C, Sels, Acts> = S & Slice<C> & Sels & Acts;
+type BoundReducerPublic<S, Sels, Acts> = S & Sels & Acts;
+type MappedReducerPublic<S, Sels, Acts> = S & Sels & Acts;
+
+// reducerForKey(key) → child reducer
+// reducerForKey(key, initFn) → initialized slice
+export type ReducerForKey<
+  key,
+  ChildReducer extends (state: any, action: any) => any
+> = {
+  <Init extends (slice: ReturnType<ChildReducer>) => any>(
+    key: string | number,
+    initialiser: Init
+  ): ReturnType<ChildReducer>;
+  (key: string | number): ChildReducer;
+};
 
 // Bind reducer
-export declare function bindReducer<
-  S,
-  A extends Record<string, (...args: any[]) => any> = {}
->(
-  reducer: (state: S, action: any) => S,
-  config?: { selectors?: Record<string, any>; actions?: A }
-): BoundReducerInternal<S, A> & BoundReducerPublic<S, A>;
+export declare function bindReducer<S, A extends Actions = {}>(
+  reducer: (state: S, action: ReturnType<A[keyof A]>) => S,
+  config?: { selectors?: Sels; actions?: A }
+): BoundReducerPublic<S, A>;
 
 export declare function mappedReducer<
   S,
@@ -70,8 +57,7 @@ export declare function mappedReducer<
   reducer: (state: S, action: any) => S,
   child: Child,
   config?: { selectors?: Sels; actions?: Acts }
-): MappedReducerInternal<S, Child, Sels, Acts> &
-  MappedReducerPublic<S, Child, Sels, Acts>;
+): MappedReducerPublic<S, Sels, Acts>;
 
 // Internal shape for combineReducers (never exposed)
 interface CombineReducerInternal<
@@ -99,8 +85,7 @@ export declare function combineReducers<
 >(
   reducers: R,
   config?: { selectors?: Sels; actions?: Acts }
-): CombineReducerInternal<RTCAnswerOptions, Sels, Acts> &
-  CombineReducerPublic<RTCAnswerOptions, Sels, Acts>;
+): CombineReducerPublic<RTCAnswerOptions, Sels, Acts>;
 
 interface SelectorWithFactory<Input = any, Props = any, Output = any>
   extends Selector<Input, Props, Output> {
