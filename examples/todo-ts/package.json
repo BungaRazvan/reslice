@@ -1,0 +1,34 @@
+{
+  "name": "reslice_todo_ts",
+  "version": "0.1.0",
+  "description": "ResliceToDo Example",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^10.0.0",
+    "parcel-bundler": "^1.12.5",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-devtools": "^3.4.0",
+    "redux-devtools-dock-monitor": "^1.1.2",
+    "redux-devtools-log-monitor": "^1.3.0",
+    "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
+    "reslice": "file:../../",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {}
+}
