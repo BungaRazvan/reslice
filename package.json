@@ -3,15 +3,17 @@
   "version": "0.5.0",
   "description": "React/Redux State Management",
   "main": "lib/reslice.js",
+  "types": "lib/reslice.js",
   "scripts": {
     "//": "",
-    "build": "cross-env BABEL_ENV=es babel src --out-dir lib",
+    "build": "cross-env BABEL_ENV=es babel src --out-dir lib && cp src/reslice.d.ts lib/",
     "test": "cross-env mocha ./test/reslice.test.js --require babel-core/register --watch",
     "cover": "cross-env nyc --reporter=lcov --reporter=text mocha ./test/reslice.test.js --require babel-core/register"
   },
   "author": "Mike Richardson",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
