@@ -42,12 +42,10 @@ function _todos(state = [], action, reducerForKey) {
   return state.map((todo, index) => reducerForKey(index)(todo, action));
 }
 
-type TodoState = Slice<typeof _todos>;
-
 const selectors = {
   getFiltered: createSelector(
-    (slice: TodoState, props) => slice,
-    (slice: TodoState, props) => props.filter,
+    (slice, props) => slice,
+    (slice, props) => props.filter,
     (todos, filter) => {
       switch (filter) {
         case "SHOW_ACTIVE":
